@@ -1,0 +1,1942 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIKHIL INFO WEB - Multi-Service Information Lookup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header with animation */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: backgroundShift 20s linear infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-60px, -60px); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #c7d2fe;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #c7d2fe;
+            margin-top: 5px;
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(79, 70, 229, 0.03) 0%, rgba(16, 185, 129, 0.03) 100%);
+            z-index: 0;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            z-index: 1;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tabs */
+        .tabs-container {
+            max-width: 100%;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            min-width: max-content;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            animation: expandWidth 0.3s ease-out;
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .tab-content {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .input-with-icon input:focus + i {
+            color: var(--primary);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--gray), #475569);
+        }
+
+        /* Results container */
+        .results-container {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .results-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .result-card {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+        }
+
+        .result-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: var(--gray);
+        }
+
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .member-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--secondary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-card h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .member-relation {
+            display: inline-block;
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Loading animation */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Error message */
+        .error-message {
+            background-color: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #c7d2fe;
+        }
+
+        .footer-section p {
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* Floating elements */
+        .floating {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .floating-1 {
+            top: 10%;
+            left: 5%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            top: 20%;
+            right: 10%;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+
+        .floating-3 {
+            bottom: 20%;
+            left: 10%;
+            animation: float 10s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .member-list {
+                grid-template-columns: 1fr;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .results-header div {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            .results-header .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header, footer, .tabs, .btn {
+                display: none;
+            }
+            
+            .results-container {
+                display: block !important;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating floating-1">
+            <i class="fas fa-search fa-3x"></i>
+        </div>
+        <div class="floating floating-2">
+            <i class="fas fa-id-card fa-3x"></i>
+        </div>
+        <div class="floating floating-3">
+            <i class="fas fa-mobile-alt fa-3x"></i>
+        </div>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <h1>Veeru<span>Lookup</span></h1>
+                        <div class="tagline">Multi-Service Information Lookup Platform</div>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-headset"></i> Support: +91 9146373546
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Find Information Quickly & Securely</h2>
+            <p>VeeruLookup helps you verify multiple types of information with our secure and reliable lookup services.</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="phone">Phone Lookup</button>
+                    <button class="tab-btn" data-tab="aadhaar">Aadhaar Lookup</button>
+                    <button class="tab-btn" data-tab="gst">GST Lookup</button>
+                    <button class="tab-btn" data-tab="ifsc">IFSC Lookup</button>
+                    <button class="tab-btn" data-tab="pincode">Pincode Lookup</button>
+                    <button class="tab-btn" data-tab="upi">UPI Lookup</button>
+                    <button class="tab-btn" data-tab="vehicle">Vehicle Lookup</button>
+                </div>
+            </div>
+            
+            <!-- Phone Lookup Tab -->
+            <div class="tab-content active" id="phone-tab">
+                <div class="form-container">
+                    <h3>Search by Phone Number</h3>
+                    <p>Enter a 10-digit mobile number to retrieve information</p>
+                    
+                    <div class="form-group">
+                        <label for="phone-input">Mobile Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                            <input type="text" id="phone-input" placeholder="Enter 10-digit mobile number" maxlength="10">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="phone-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+            </div>
+            
+            <!-- Aadhaar Lookup Tab -->
+            <div class="tab-content" id="aadhaar-tab">
+                <div class="form-container">
+                    <h3>Search by Aadhaar Number</h3>
+                    <p>Enter a 12-digit Aadhaar number to retrieve information</p>
+                    
+                    <div class="form-group">
+                        <label for="aadhaar-input">Aadhaar Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="aadhaar-input" placeholder="Enter 12-digit Aadhaar number" maxlength="12">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="aadhaar-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="aadhaar-error"></div>
+                </div>
+            </div>
+            
+            <!-- GST Lookup Tab -->
+            <div class="tab-content" id="gst-tab">
+                <div class="form-container">
+                    <h3>Search by GST Number</h3>
+                    <p>Enter a 15-digit GST number to retrieve information</p>
+                    
+                    <div class="form-group">
+                        <label for="gst-input">GST Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-file-invoice"></i>
+                            <input type="text" id="gst-input" placeholder="Enter 15-digit GST number" maxlength="15">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="gst-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="gst-error"></div>
+                </div>
+            </div>
+            
+            <!-- IFSC Lookup Tab -->
+            <div class="tab-content" id="ifsc-tab">
+                <div class="form-container">
+                    <h3>Search by IFSC Code</h3>
+                    <p>Enter an 11-character IFSC code to retrieve bank details</p>
+                    
+                    <div class="form-group">
+                        <label for="ifsc-input">IFSC Code</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-university"></i>
+                            <input type="text" id="ifsc-input" placeholder="Enter 11-character IFSC code" maxlength="11">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="ifsc-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="ifsc-error"></div>
+                </div>
+            </div>
+            
+            <!-- Pincode Lookup Tab -->
+            <div class="tab-content" id="pincode-tab">
+                <div class="form-container">
+                    <h3>Search by Pincode</h3>
+                    <p>Enter a 6-digit pincode to retrieve location information</p>
+                    
+                    <div class="form-group">
+                        <label for="pincode-input">Pincode</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="pincode-input" placeholder="Enter 6-digit pincode" maxlength="6">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="pincode-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="pincode-error"></div>
+                </div>
+            </div>
+            
+            <!-- UPI Lookup Tab -->
+            <div class="tab-content" id="upi-tab">
+                <div class="form-container">
+                    <h3>Search by UPI ID</h3>
+                    <p>Enter a UPI ID to retrieve bank and account holder information</p>
+                    
+                    <div class="form-group">
+                        <label for="upi-input">UPI ID</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <input type="text" id="upi-input" placeholder="Enter UPI ID (e.g., name@bank)">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="upi-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="upi-error"></div>
+                </div>
+            </div>
+            
+            <!-- Vehicle Lookup Tab -->
+            <div class="tab-content" id="vehicle-tab">
+                <div class="form-container">
+                    <h3>Search by Vehicle Registration</h3>
+                    <p>Enter a vehicle registration number to retrieve details</p>
+                    
+                    <div class="form-group">
+                        <label for="vehicle-input">Vehicle Registration Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-car"></i>
+                            <input type="text" id="vehicle-input" placeholder="Enter vehicle registration number">
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="vehicle-search-btn">
+                        <i class="fas fa-search"></i> Search Now
+                    </button>
+                    
+                    <div class="error-message" id="vehicle-error"></div>
+                </div>
+            </div>
+            
+            <!-- Loading Indicator -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Searching for information...</p>
+            </div>
+            
+            <!-- Phone Results -->
+            <div class="results-container" id="phone-results">
+                <div class="results-header">
+                    <h3>Phone Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="phone-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="phone-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-user"></i> Personal Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Name</div>
+                            <div class="info-value" id="phone-name">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Father's Name</div>
+                            <div class="info-value" id="phone-father">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Mobile Number</div>
+                            <div class="info-value" id="phone-mobile">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">ID Number</div>
+                            <div class="info-value" id="phone-id">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Address Details</h4>
+                    <div class="info-item">
+                        <div class="info-label">Full Address</div>
+                        <div class="info-value" id="phone-address">-</div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Circle</div>
+                            <div class="info-value" id="phone-circle">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Alternate Mobile</div>
+                            <div class="info-value" id="phone-alt">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value" id="phone-email">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aadhaar Results -->
+            <div class="results-container" id="aadhaar-results">
+                <div class="results-header">
+                    <h3>Aadhaar Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="aadhaar-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="aadhaar-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-home"></i> Location Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">State</div>
+                            <div class="info-value" id="aadhaar-state">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">District</div>
+                            <div class="info-value" id="aadhaar-district">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">FPS ID</div>
+                            <div class="info-value" id="aadhaar-fps">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Scheme</div>
+                            <div class="info-value" id="aadhaar-scheme">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
+                    <div class="info-item">
+                        <div class="info-label">Full Address</div>
+                        <div class="info-value" id="aadhaar-address">-</div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-users"></i> Family Members</h4>
+                    <div class="member-list" id="aadhaar-members">
+                        <!-- Member cards will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GST Results -->
+            <div class="results-container" id="gst-results">
+                <div class="results-header">
+                    <h3>GST Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="gst-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="gst-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-building"></i> Business Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">GSTIN</div>
+                            <div class="info-value" id="gst-number">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Legal Name</div>
+                            <div class="info-value" id="gst-legal-name">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Trade Name</div>
+                            <div class="info-value" id="gst-trade-name">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Registration Date</div>
+                            <div class="info-value" id="gst-reg-date">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Business Address</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Building Number</div>
+                            <div class="info-value" id="gst-building">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Street</div>
+                            <div class="info-value" id="gst-street">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Location</div>
+                            <div class="info-value" id="gst-location">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Pincode</div>
+                            <div class="info-value" id="gst-pincode">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">State Code</div>
+                            <div class="info-value" id="gst-state-code">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Taxpayer Type</div>
+                            <div class="info-value" id="gst-tax-type">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Status</div>
+                            <div class="info-value" id="gst-status">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Block Status</div>
+                            <div class="info-value" id="gst-block-status">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- IFSC Results -->
+            <div class="results-container" id="ifsc-results">
+                <div class="results-header">
+                    <h3>IFSC Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="ifsc-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="ifsc-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-university"></i> Bank Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Bank</div>
+                            <div class="info-value" id="ifsc-bank">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Branch</div>
+                            <div class="info-value" id="ifsc-branch">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">IFSC Code</div>
+                            <div class="info-value" id="ifsc-code">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Bank Code</div>
+                            <div class="info-value" id="ifsc-bank-code">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Location Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Address</div>
+                            <div class="info-value" id="ifsc-address">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">City</div>
+                            <div class="info-value" id="ifsc-city">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">District</div>
+                            <div class="info-value" id="ifsc-district">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">State</div>
+                            <div class="info-value" id="ifsc-state">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-info-circle"></i> Banking Services</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">NEFT</div>
+                            <div class="info-value" id="ifsc-neft">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">RTGS</div>
+                            <div class="info-value" id="ifsc-rtgs">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">IMPS</div>
+                            <div class="info-value" id="ifsc-imps">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">UPI</div>
+                            <div class="info-value" id="ifsc-upi">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pincode Results -->
+            <div class="results-container" id="pincode-results">
+                <div class="results-header">
+                    <h3>Pincode Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="pincode-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="pincode-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-map"></i> Pincode Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Pincode</div>
+                            <div class="info-value" id="pincode-number">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Country</div>
+                            <div class="info-value" id="pincode-country">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Country Abbreviation</div>
+                            <div class="info-value" id="pincode-country-abbr">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-location-dot"></i> Places in this Pincode</h4>
+                    <div class="places-list" id="pincode-places">
+                        <!-- Places will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-mail-bulk"></i> Post Offices</h4>
+                    <div class="post-office-list" id="pincode-post-offices">
+                        <!-- Post offices will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- UPI Results -->
+            <div class="results-container" id="upi-results">
+                <div class="results-header">
+                    <h3>UPI Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="upi-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="upi-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-user"></i> Account Holder Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Name</div>
+                            <div class="info-value" id="upi-name">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">VPA (UPI ID)</div>
+                            <div class="info-value" id="upi-vpa">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">IFSC Code</div>
+                            <div class="info-value" id="upi-ifsc">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-university"></i> Bank Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Bank</div>
+                            <div class="info-value" id="upi-bank">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Branch</div>
+                            <div class="info-value" id="upi-branch">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Address</div>
+                            <div class="info-value" id="upi-address">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">City</div>
+                            <div class="info-value" id="upi-city">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">District</div>
+                            <div class="info-value" id="upi-district">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">State</div>
+                            <div class="info-value" id="upi-state">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Contact</div>
+                            <div class="info-value" id="upi-contact">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">NEFT</div>
+                            <div class="info-value" id="upi-neft">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Vehicle Results -->
+            <div class="results-container" id="vehicle-results">
+                <div class="results-header">
+                    <h3>Vehicle Information</h3>
+                    <div>
+                        <button class="btn btn-secondary" id="vehicle-clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn" id="vehicle-print-btn">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-user"></i> Ownership Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Owner Name</div>
+                            <div class="info-value" id="vehicle-owner">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Father's Name</div>
+                            <div class="info-value" id="vehicle-father">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Owner Serial No</div>
+                            <div class="info-value" id="vehicle-owner-serial">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Registration Number</div>
+                            <div class="info-value" id="vehicle-reg-number">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-car"></i> Vehicle Details</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Model Name</div>
+                            <div class="info-value" id="vehicle-model">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Maker Model</div>
+                            <div class="info-value" id="vehicle-maker">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Vehicle Class</div>
+                            <div class="info-value" id="vehicle-class">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fuel Type</div>
+                            <div class="info-value" id="vehicle-fuel">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h4><i class="fas fa-calendar-alt"></i> Important Dates & Validity</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Registration Date</div>
+                            <div class="info-value" id="vehicle-reg-date">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Vehicle Age</div>
+                            <div class="info-value" id="vehicle-age">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fitness Upto</div>
+                            <div class="info-value" id="vehicle-fitness">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Insurance Upto</div>
+                            <div class="info-value" id="vehicle-insurance">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About VeeruLookup</h3>
+                    <p>VeeruLookup is a secure and reliable information lookup service that helps you verify multiple types of information quickly and efficiently.</p>
+                    <p>Our platform ensures data privacy and security while providing accurate information.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Phone Lookup</a></li>
+                        <li><a href="#">Aadhaar Lookup</a></li>
+                        <li><a href="#">GST Lookup</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Business Street, City, State 12345</p>
+                    <p><i class="fas fa-phone"></i> +91 9146373546 </p>
+                    <p><i class="fas fa-envelope"></i> support@Nikhil explore</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 VeeruLookup. All rights reserved. | Powered by <a href="https://t.me/unknown0102" style="color: #c7d2fe;">t.me/unknown0102</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                button.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // Hide all results and errors
+                document.querySelectorAll('.results-container').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.classList.remove('active');
+                });
+            });
+        });
+
+        // Phone search functionality
+        document.getElementById('phone-search-btn').addEventListener('click', () => {
+            const phoneInput = document.getElementById('phone-input').value;
+            
+            if (phoneInput.length !== 10 || isNaN(phoneInput)) {
+                showError('phone-error', 'Please enter a valid 10-digit mobile number');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('phone-error');
+            
+            // Make API call
+            fetch(`/search_phone?number=${phoneInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('phone-results').classList.add('active');
+                        
+                        // Populate data
+                        const result = data.result[0];
+                        document.getElementById('phone-name').textContent = result.name || 'Not Available';
+                        document.getElementById('phone-father').textContent = result.father_name || 'Not Available';
+                        document.getElementById('phone-mobile').textContent = result.mobile || 'Not Available';
+                        document.getElementById('phone-id').textContent = result.id_number || 'Not Available';
+                        document.getElementById('phone-address').textContent = formatAddress(result.address) || 'Not Available';
+                        document.getElementById('phone-circle').textContent = result.circle || 'Not Available';
+                        document.getElementById('phone-alt').textContent = result.alt_mobile || 'Not Available';
+                        document.getElementById('phone-email').textContent = result.email || 'Not Available';
+                    } else {
+                        showError('phone-error', 'No information found for this phone number');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('phone-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // Aadhaar search functionality
+        document.getElementById('aadhaar-search-btn').addEventListener('click', () => {
+            const aadhaarInput = document.getElementById('aadhaar-input').value;
+            
+            if (aadhaarInput.length !== 12 || isNaN(aadhaarInput)) {
+                showError('aadhaar-error', 'Please enter a valid 12-digit Aadhaar number');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('aadhaar-error');
+            
+            // Make API call
+            fetch(`/search_aadhaar?aadhaar=${aadhaarInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('aadhaar-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('aadhaar-state').textContent = data.homeStateName || 'Not Available';
+                        document.getElementById('aadhaar-district').textContent = data.homeDistName || 'Not Available';
+                        document.getElementById('aadhaar-fps').textContent = data.fpsId || 'Not Available';
+                        document.getElementById('aadhaar-scheme').textContent = data.schemeName || 'Not Available';
+                        document.getElementById('aadhaar-address').textContent = data.address || 'Not Available';
+                        
+                        // Populate members
+                        const membersContainer = document.getElementById('aadhaar-members');
+                        membersContainer.innerHTML = '';
+                        
+                        if (data.memberDetailsList && data.memberDetailsList.length > 0) {
+                            data.memberDetailsList.forEach(member => {
+                                const memberCard = document.createElement('div');
+                                memberCard.className = 'member-card';
+                                memberCard.innerHTML = `
+                                    <h5>${member.memberName}</h5>
+                                    <div class="member-relation">${member.releationship_name}</div>
+                                    <div class="info-item">
+                                        <div class="info-label">Aadhaar Verified</div>
+                                        <div class="info-value">${member.uid}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Member ID</div>
+                                        <div class="info-value">${member.memberId}</div>
+                                    </div>
+                                `;
+                                membersContainer.appendChild(memberCard);
+                            });
+                        } else {
+                            membersContainer.innerHTML = '<p>No member details available</p>';
+                        }
+                    } else {
+                        showError('aadhaar-error', 'No information found for this Aadhaar number');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('aadhaar-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // GST search functionality
+        document.getElementById('gst-search-btn').addEventListener('click', () => {
+            const gstInput = document.getElementById('gst-input').value;
+            
+            if (gstInput.length !== 15) {
+                showError('gst-error', 'Please enter a valid 15-digit GST number');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('gst-error');
+            
+            // Make API call
+            fetch(`/search_gst?gst=${gstInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('gst-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('gst-number').textContent = data.gstin || 'Not Available';
+                        document.getElementById('gst-legal-name').textContent = data.legalName || 'Not Available';
+                        document.getElementById('gst-trade-name').textContent = data.tradeName || 'Not Available';
+                        document.getElementById('gst-reg-date').textContent = data.dtReg || 'Not Available';
+                        document.getElementById('gst-building').textContent = data.addrBno || 'Not Available';
+                        document.getElementById('gst-street').textContent = data.addrSt || 'Not Available';
+                        document.getElementById('gst-location').textContent = data.addrLoc || 'Not Available';
+                        document.getElementById('gst-pincode').textContent = data.addrPncd || 'Not Available';
+                        document.getElementById('gst-state-code').textContent = data.stateCode || 'Not Available';
+                        document.getElementById('gst-tax-type').textContent = data.txpType || 'Not Available';
+                        document.getElementById('gst-status').textContent = data.status || 'Not Available';
+                        document.getElementById('gst-block-status').textContent = data.blkStatus || 'Not Available';
+                    } else {
+                        showError('gst-error', 'No information found for this GST number');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('gst-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // IFSC search functionality
+        document.getElementById('ifsc-search-btn').addEventListener('click', () => {
+            const ifscInput = document.getElementById('ifsc-input').value;
+            
+            if (ifscInput.length !== 11) {
+                showError('ifsc-error', 'Please enter a valid 11-character IFSC code');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('ifsc-error');
+            
+            // Make API call
+            fetch(`/search_ifsc?ifsc=${ifscInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('ifsc-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('ifsc-bank').textContent = data.bank || 'Not Available';
+                        document.getElementById('ifsc-branch').textContent = data.branch || 'Not Available';
+                        document.getElementById('ifsc-code').textContent = data.ifsc || 'Not Available';
+                        document.getElementById('ifsc-bank-code').textContent = data.bankCode || 'Not Available';
+                        document.getElementById('ifsc-address').textContent = data.address || 'Not Available';
+                        document.getElementById('ifsc-city').textContent = data.city || 'Not Available';
+                        document.getElementById('ifsc-district').textContent = data.district || 'Not Available';
+                        document.getElementById('ifsc-state').textContent = data.state || 'Not Available';
+                        document.getElementById('ifsc-neft').textContent = data.neft ? 'Yes' : 'No';
+                        document.getElementById('ifsc-rtgs').textContent = data.rtgs ? 'Yes' : 'No';
+                        document.getElementById('ifsc-imps').textContent = data.imps ? 'Yes' : 'No';
+                        document.getElementById('ifsc-upi').textContent = data.upi ? 'Yes' : 'No';
+                    } else {
+                        showError('ifsc-error', 'No information found for this IFSC code');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('ifsc-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // Pincode search functionality
+        document.getElementById('pincode-search-btn').addEventListener('click', () => {
+            const pincodeInput = document.getElementById('pincode-input').value;
+            
+            if (pincodeInput.length !== 6 || isNaN(pincodeInput)) {
+                showError('pincode-error', 'Please enter a valid 6-digit pincode');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('pincode-error');
+            
+            // Make API call
+            fetch(`/search_pincode?pincode=${pincodeInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('pincode-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('pincode-number').textContent = data.pincode || 'Not Available';
+                        document.getElementById('pincode-country').textContent = data.country || 'Not Available';
+                        document.getElementById('pincode-country-abbr').textContent = data.countryAbbreviation || 'Not Available';
+                        
+                        // Populate places
+                        const placesContainer = document.getElementById('pincode-places');
+                        placesContainer.innerHTML = '';
+                        
+                        if (data.places && data.places.length > 0) {
+                            const placesGrid = document.createElement('div');
+                            placesGrid.className = 'info-grid';
+                            
+                            data.places.forEach(place => {
+                                const placeItem = document.createElement('div');
+                                placeItem.className = 'info-item';
+                                placeItem.innerHTML = `
+                                    <div class="info-label">${place.placeName}</div>
+                                    <div class="info-value">${place.state} (${place.stateAbbreviation})</div>
+                                `;
+                                placesGrid.appendChild(placeItem);
+                            });
+                            
+                            placesContainer.appendChild(placesGrid);
+                        } else {
+                            placesContainer.innerHTML = '<p>No place details available</p>';
+                        }
+                        
+                        // Populate post offices
+                        const postOfficesContainer = document.getElementById('pincode-post-offices');
+                        postOfficesContainer.innerHTML = '';
+                        
+                        if (data.postOffices && data.postOffices.length > 0) {
+                            const postOfficeGrid = document.createElement('div');
+                            postOfficeGrid.className = 'info-grid';
+                            
+                            data.postOffices.forEach(office => {
+                                const officeItem = document.createElement('div');
+                                officeItem.className = 'info-item';
+                                officeItem.innerHTML = `
+                                    <div class="info-label">${office.name}</div>
+                                    <div class="info-value">${office.branchType} - ${office.deliveryStatus}</div>
+                                    <div class="info-value">${office.district}, ${office.state}</div>
+                                `;
+                                postOfficeGrid.appendChild(officeItem);
+                            });
+                            
+                            postOfficesContainer.appendChild(postOfficeGrid);
+                        } else {
+                            postOfficesContainer.innerHTML = '<p>No post office details available</p>';
+                        }
+                    } else {
+                        showError('pincode-error', 'No information found for this pincode');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('pincode-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // UPI search functionality
+        document.getElementById('upi-search-btn').addEventListener('click', () => {
+            const upiInput = document.getElementById('upi-input').value;
+            
+            if (!upiInput.includes('@')) {
+                showError('upi-error', 'Please enter a valid UPI ID (e.g., name@bank)');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('upi-error');
+            
+            // Make API call
+            fetch(`/search_upi?upi=${upiInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('upi-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('upi-name').textContent = data.name || 'Not Available';
+                        document.getElementById('upi-vpa').textContent = data.vpa || 'Not Available';
+                        document.getElementById('upi-ifsc').textContent = data.ifsc || 'Not Available';
+                        document.getElementById('upi-bank').textContent = data.bank || 'Not Available';
+                        document.getElementById('upi-branch').textContent = data.branch || 'Not Available';
+                        document.getElementById('upi-address').textContent = data.address || 'Not Available';
+                        document.getElementById('upi-city').textContent = data.city || 'Not Available';
+                        document.getElementById('upi-district').textContent = data.district || 'Not Available';
+                        document.getElementById('upi-state').textContent = data.state || 'Not Available';
+                        document.getElementById('upi-contact').textContent = data.contact || 'Not Available';
+                        document.getElementById('upi-neft').textContent = data.neft ? 'Yes' : 'No';
+                    } else {
+                        showError('upi-error', 'No information found for this UPI ID');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('upi-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // Vehicle search functionality
+        document.getElementById('vehicle-search-btn').addEventListener('click', () => {
+            const vehicleInput = document.getElementById('vehicle-input').value;
+            
+            if (vehicleInput.length < 5) {
+                showError('vehicle-error', 'Please enter a valid vehicle registration number');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            hideError('vehicle-error');
+            
+            // Make API call
+            fetch(`/search_vehicle?rc=${vehicleInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    document.getElementById('loading').classList.remove('active');
+                    
+                    if (data.success) {
+                        // Show results
+                        document.getElementById('vehicle-results').classList.add('active');
+                        
+                        // Populate data
+                        document.getElementById('vehicle-owner').textContent = data.ownerName || 'Not Available';
+                        document.getElementById('vehicle-father').textContent = data.fatherName || 'Not Available';
+                        document.getElementById('vehicle-owner-serial').textContent = data.ownerSerial || 'Not Available';
+                        document.getElementById('vehicle-reg-number').textContent = data.registrationNumber || 'Not Available';
+                        document.getElementById('vehicle-model').textContent = data.modelName || 'Not Available';
+                        document.getElementById('vehicle-maker').textContent = data.makerModel || 'Not Available';
+                        document.getElementById('vehicle-class').textContent = data.vehicleClass || 'Not Available';
+                        document.getElementById('vehicle-fuel').textContent = data.fuelType || 'Not Available';
+                        document.getElementById('vehicle-reg-date').textContent = data.registrationDate || 'Not Available';
+                        document.getElementById('vehicle-age').textContent = data.vehicleAge || 'Not Available';
+                        document.getElementById('vehicle-fitness').textContent = data.fitnessUpto || 'Not Available';
+                        document.getElementById('vehicle-insurance').textContent = data.insuranceUpto || 'Not Available';
+                    } else {
+                        showError('vehicle-error', 'No information found for this vehicle registration number');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('active');
+                    showError('vehicle-error', 'An error occurred while fetching data');
+                    console.error('Error:', error);
+                });
+        });
+
+        // Clear functionality for all services
+        document.getElementById('phone-clear-btn').addEventListener('click', () => {
+            document.getElementById('phone-results').classList.remove('active');
+            document.getElementById('phone-input').value = '';
+        });
+        
+        document.getElementById('aadhaar-clear-btn').addEventListener('click', () => {
+            document.getElementById('aadhaar-results').classList.remove('active');
+            document.getElementById('aadhaar-input').value = '';
+        });
+        
+        document.getElementById('gst-clear-btn').addEventListener('click', () => {
+            document.getElementById('gst-results').classList.remove('active');
+            document.getElementById('gst-input').value = '';
+        });
+        
+        document.getElementById('ifsc-clear-btn').addEventListener('click', () => {
+            document.getElementById('ifsc-results').classList.remove('active');
+            document.getElementById('ifsc-input').value = '';
+        });
+        
+        document.getElementById('pincode-clear-btn').addEventListener('click', () => {
+            document.getElementById('pincode-results').classList.remove('active');
+            document.getElementById('pincode-input').value = '';
+        });
+        
+        document.getElementById('upi-clear-btn').addEventListener('click', () => {
+            document.getElementById('upi-results').classList.remove('active');
+            document.getElementById('upi-input').value = '';
+        });
+        
+        document.getElementById('vehicle-clear-btn').addEventListener('click', () => {
+            document.getElementById('vehicle-results').classList.remove('active');
+            document.getElementById('vehicle-input').value = '';
+        });
+
+        // Print functionality for all services
+        document.getElementById('phone-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('aadhaar-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('gst-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('ifsc-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('pincode-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('upi-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.getElementById('vehicle-print-btn').addEventListener('click', () => {
+            window.print();
+        });
+
+        // Input validation for all services
+        document.getElementById('phone-input').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').substring(0, 10);
+            hideError('phone-error');
+        });
+        
+        document.getElementById('aadhaar-input').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').substring(0, 12);
+            hideError('aadhaar-error');
+        });
+        
+        document.getElementById('gst-input').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+            hideError('gst-error');
+        });
+        
+        document.getElementById('ifsc-input').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+            hideError('ifsc-error');
+        });
+        
+        document.getElementById('pincode-input').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').substring(0, 6);
+            hideError('pincode-error');
+        });
+        
+        document.getElementById('upi-input').addEventListener('input', function() {
+            hideError('upi-error');
+        });
+        
+        document.getElementById('vehicle-input').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+            hideError('vehicle-error');
+        });
+
+        // Helper functions
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('active');
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.classList.remove('active');
+        }
+
+        function formatAddress(address) {
+            if (!address) return 'Not Available';
+            // Remove !NA! and clean up the address
+            return address.replace(/!NA!/g, '').replace(/!/g, ', ');
+        }
+
+        // Add animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all result cards and form containers
+        document.querySelectorAll('.result-card, .form-container').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
